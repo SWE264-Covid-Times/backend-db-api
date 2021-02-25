@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import date
 
 conn = sqlite3.connect("covidtimesdata.db")
 cur = conn.cursor()
