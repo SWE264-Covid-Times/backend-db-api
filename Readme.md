@@ -1,13 +1,13 @@
-ABOUT
+#ABOUT
 Application to serve as the back-end of covid-times android App 
 developed for  MSWE 264P University of California Irvine
 
 NOTE:
-This application is a minor modification of code at : https://github.com/Abdulaziz89/flask_api_demo
-Please refer to the original author for specifics
+This application is a minor modification of code at : https://github.com/Abdulaziz89/flask_api_demo </br>
+Please refer to the original repo for specifics
 
-URL Samples :
-On Localhost
+#URL Samples :
+On Localhost</br>
 Get all users
 http://127.0.0.1:5000/covidapi/resources/users
 
@@ -18,7 +18,7 @@ Curl command to add user
 curl -X POST http://127.0.0.1:5000/covidapi/resources/useradd -H "Content-type:application/json" -d "{\"name\":\"carol\"}"
 
 Curl command add history for user
-curl -X POST http://127.0.0.1:5000/covidapi/resources/historyadd -H "Content-type:application/json" -d "{\"name\":\"ben\",\"searchterm\":\"australia\"}"
+curl -X POST http://127.0.0.1:5000/covidapi/resources/historyadd -H "Content-type:application/json" -d "{\"name\":\"ben\",\"searchterm\":\"south-africa\",\"fromdate\":\"2021-02-10\",\"todate\":\"2021-02-13\",\"casecount\":100}"
 
 On Elastic BeanStalk :
 TBD

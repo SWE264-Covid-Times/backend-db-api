@@ -58,12 +58,15 @@ def add_user_history():
     try:
         uname = request.json['name']
         searchterm = request.json['searchterm']
+        fromdate = request.json['fromdate']
+        todate = request.json['todate']
+        casecount = request.json['casecount']
         
         with sqlite3.connect("covidtimesdata.db") as conn:
             cur = conn.cursor()
             userid = cur.execute("SELECT id FROM Users WHERE name=?;",[uname]).fetchone()
 
-            cur.execute("INSERT INTO History (userid,searchterm) VALUES(?,?)",(userid[0],searchterm))
+            cur.execute("INSERT INTO History (userid,searchterm, fromdate, todate, casecount) VALUES(?,?,?,?,?)",(userid[0],searchterm,fromdate, todate, casecount))
             conn.commit()
             print("Added to history {}, {}".format(uname,searchterm))
     except Exception as e:
