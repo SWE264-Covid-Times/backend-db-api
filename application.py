@@ -78,6 +78,18 @@ def add_user_history():
         return jsonify({'user name': uname,'search term': searchterm}), 201
         conn.close()
 
+# return all of the vaccination info, from  DB
+@application.route('/covidapi/resources/vaccinations', methods=['GET'])
+def get_all_vaccine_info():
+    with sqlite3.connect('covidtimesdata.db') as conn:
+        #conn.row_factory = dict_factory
+        cur = conn.cursor()
+        all_vaccine_info = cur.execute("SELECT * FROM Vaccinations;").fetchall()
+        
+        return jsonify(all_vaccine_info)
+        conn.close()
+
+
 # run the app.
 if __name__ == "__main__":
     application.debug = True
