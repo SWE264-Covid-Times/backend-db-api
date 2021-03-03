@@ -24,7 +24,7 @@ http://127.0.0.1:5000/covidapi/resources/history/ben
 
 Vaccination counts by California county
 
-127.0.0.1:5000/covidapi/resources/vaccinations
+http://127.0.0.1:5000/covidapi/resources/vaccinations
 
 Curl command to add user
 
