@@ -79,7 +79,7 @@ def add_user_history():
         conn.close()
 
 # return all of the vaccination info, from  DB
-@application.route('/covidapi/resources/vaccinations', methods=['GET'])
+@application.route('/covidapi/resources/vaccinations/all', methods=['GET'])
 def get_all_vaccine_info():
     with sqlite3.connect('covidtimesdata.db') as conn:
         #conn.row_factory = dict_factory
@@ -88,6 +88,28 @@ def get_all_vaccine_info():
         
         return jsonify(all_vaccine_info)
         conn.close()
+
+# return vaccination info by county
+@application.route('/covidapi/resources/vaccinations/<county>', methods=['GET'])
+def get_vaccinations_county(county):
+    with sqlite3.connect('covidtimesdata.db') as conn:
+        #conn.row_factory = dict_factory
+        cur = conn.cursor()
+        county_vaccines = cur.execute("SELECT * FROM Vaccinations WHERE county=?;", [county]).fetchall()
+
+        return jsonify(county_vaccines)      
+        conn.close() 
+
+# return vaccination provider by irvine zip code
+@application.route('/covidapi/resources/vaccinations/irvine/<zip>', methods=['GET'])
+def get_vaccine_provider_irvine(zip):
+    with sqlite3.connect('covidtimesdata.db') as conn:
+        #conn.row_factory = dict_factory
+        cur = conn.cursor()
+        vaccine_provider = cur.execute("SELECT * FROM Provider WHERE zipcode=?;", [zip]).fetchall()
+
+        return jsonify(vaccine_provider)      
+        conn.close() 
 
 
 # run the app.
