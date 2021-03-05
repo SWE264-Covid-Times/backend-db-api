@@ -8,6 +8,12 @@ application = Flask(__name__)
 @application.route('/', methods=['GET'])
 def home():
     return '<h1> COVID TIMES API </h1>'
+# returns items as dictionaries {col: row}
+def dict_factory(cursor, row):
+    d = {}
+    for idx, col in enumerate(cursor.description):
+        d[col[0]] = row[idx]
+    return d
 
 # add a user to the DB
 @application.route('/covidapi/resources/useradd', methods=['POST'])
@@ -25,7 +31,7 @@ def add_user():
         conn.rollback()
 
     finally:
-        return jsonify({'user name': uname}), 201
+        return jsonify({'name': uname}), 201
         conn.close()
 
 
@@ -33,7 +39,7 @@ def add_user():
 @application.route('/covidapi/resources/users', methods=['GET'])
 def get_all_users():
     with sqlite3.connect('covidtimesdata.db') as conn:
-        #conn.row_factory = dict_factory
+        conn.row_factory = dict_factory
         cur = conn.cursor()
         all_users = cur.execute("SELECT * FROM Users;").fetchall()
         
@@ -44,10 +50,10 @@ def get_all_users():
 @application.route('/covidapi/resources/history/<name>', methods=['GET'])
 def get_all_user_history(name):
     with sqlite3.connect('covidtimesdata.db') as conn:
-        #conn.row_factory = dict_factory
+        conn.row_factory = dict_factory
         cur = conn.cursor()
-        userid = cur.execute("SELECT id FROM Users WHERE name=?;",[name]).fetchone()
-        all_user_history = cur.execute("SELECT * FROM History WHERE userid=?;", userid).fetchall()
+        #userid = cur.execute("SELECT id FROM Users WHERE name=?;",[name]).fetchone()
+        all_user_history = cur.execute("SELECT * FROM History WHERE userid=(SELECT id FROM Users WHERE name=?);", [name]).fetchall()
 
         return jsonify(all_user_history)      
         conn.close()  
@@ -82,7 +88,7 @@ def add_user_history():
 @application.route('/covidapi/resources/vaccinations/all', methods=['GET'])
 def get_all_vaccine_info():
     with sqlite3.connect('covidtimesdata.db') as conn:
-        #conn.row_factory = dict_factory
+        conn.row_factory = dict_factory
         cur = conn.cursor()
         all_vaccine_info = cur.execute("SELECT * FROM Vaccinations;").fetchall()
         
@@ -93,7 +99,7 @@ def get_all_vaccine_info():
 @application.route('/covidapi/resources/vaccinations/<county>', methods=['GET'])
 def get_vaccinations_county(county):
     with sqlite3.connect('covidtimesdata.db') as conn:
-        #conn.row_factory = dict_factory
+        conn.row_factory = dict_factory
         cur = conn.cursor()
         county_vaccines = cur.execute("SELECT * FROM Vaccinations WHERE county=?;", [county]).fetchall()
 
@@ -104,7 +110,7 @@ def get_vaccinations_county(county):
 @application.route('/covidapi/resources/vaccinations/irvine/<zip>', methods=['GET'])
 def get_vaccine_provider_irvine(zip):
     with sqlite3.connect('covidtimesdata.db') as conn:
-        #conn.row_factory = dict_factory
+        conn.row_factory = dict_factory
         cur = conn.cursor()
         vaccine_provider = cur.execute("SELECT * FROM Provider WHERE zipcode=?;", [zip]).fetchall()
 
