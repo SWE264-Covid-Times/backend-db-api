@@ -5,7 +5,7 @@ developed for  MSWE 264P University of California Irvine
 Vaccination Information obtained from : 
 https://github.com/datadesk/california-coronavirus-data/blob/master/cdph-vaccination-county-totals.csv
 
-DB currently holds data from 28 Jan 2021 to March 2 2021
+DB currently holds data from 28 Jan 2021 to March 7 2021
 
 Nearest vaccine provider in Irvine by zipcode gleaned from :
 https://vaccinefinder.org/
