@@ -45,6 +45,7 @@ Curl command add history for given user
 
 curl -X POST http://127.0.0.1:5000/covidapi/resources/historyadd -H "Content-type:application/json" -d "{\\"name\\":\\"ben\\",\\"searchterm\\":\\"south-africa\\",\\"fromdate\\":\\"2021-02-10\\",\\"todate\\":\\"2021-02-13\\",\\"casecount\\":100}"
 
+(Beanstalk links are no longer active)
 On Elastic BeanStalk :<br />
 List all users <br />
 http://covidtimes-env.eba-yjpbhcys.us-east-2.elasticbeanstalk.com/covidapi/resources/users
